@@ -30,6 +30,8 @@ class Config(collections.MutableMapping):
             self.store['CONFIG_FILE'] = conf_file
             with open(self.store['CONFIG_FILE'], 'r') as conf:
                 data = yaml.load(conf)
+            if not data:
+                data = {}
             if 'ignore' in data:
                 if isinstance(data['ignore'], str):
                     self.store['IGNORE'] = [data['ignore']]
