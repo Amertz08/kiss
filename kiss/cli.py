@@ -2,33 +2,16 @@ import os
 import click
 import yaml
 
-from jinja2 import Environment, FileSystemLoader, select_autoescape
-
-PROJ_DIR = os.getcwd()
-TEMPLATE_DIR = os.path.join(os.getcwd(), 'templates')
-BUILD_DIR = os.path.join(PROJ_DIR, 'build')
-env = Environment(
-    loader=FileSystemLoader(TEMPLATE_DIR),
-    autoescape=select_autoescape(['html'])
-)
+from config import Config
 
 
 @click.group()
 @click.pass_context
 def cli(ctx):
     # Set defaults
-    ctx.obj = {}
-    ctx.obj['IGNORE'] = {}
-
-    config = os.path.join(PROJ_DIR, '.kiss.yml')
-    if os.path.exists(config):
-        with open(config, 'r') as conf:
-            data = yaml.load(conf)
-        if 'ignore' in data:
-            if isinstance(data['ignore'], str):
-                ctx.obj['IGNORE'] = [data['ignore']]
-            else:
-                ctx.obj['IGNORE'] = data['ignore']
+    ctx.obj = Config()
+    if not ctx.obj['CONFIG_FILE']:
+        print('.kiss.yml does not exist in project')
 
 
 @cli.command(help='creates new project')
@@ -48,9 +31,9 @@ def new(project_name):
 def render(ctx):
     files = None
     try:
-        files = os.listdir(TEMPLATE_DIR)
+        files = os.listdir(ctx.obj['TEMPLATE_DIR'])
     except FileNotFoundError:
-        print(f'{TEMPLATE_DIR} does not exist')
+        print(f'{ctx.obj["TEMPLATE_DIR"]} does not exist')
         exit(1)
 
     if not files:
@@ -59,15 +42,14 @@ def render(ctx):
 
     for f in files:
         if f not in ctx.obj['IGNORE']:
-            template = env.get_template(f)
             data_file_name = f.replace('.html', '.yml')
             full_data = os.path.join('data', data_file_name)
             data = {}
             if os.path.exists(full_data):
                 with open(full_data, 'r') as dfile:
                     data = yaml.load(dfile)
-            rendered_template = template.render(**data)
-            with open(os.path.join(BUILD_DIR, f), 'w') as output:
+            rendered_template = ctx.obj.render(f, **data)
+            with open(os.path.join(ctx.obj['BUILD_DIR'], f), 'w') as output:
                 output.write(rendered_template)
 
 
