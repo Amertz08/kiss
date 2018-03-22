@@ -6,6 +6,8 @@ RUN pip install \
 
 RUN mkdir /code
 WORKDIR /code
-ADD kiss.py .
+ADD setup.py .
+ADD ./kiss kiss
+RUN pip install -e .
 
-CMD ["python", "kiss.py"]
+CMD ["kiss"]
