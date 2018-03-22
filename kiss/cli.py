@@ -1,9 +1,13 @@
 import os
+import shutil
+
 import click
 import yaml
 
-from .config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
-from .decorators import config_required
+from config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
+from decorators import config_required
+
+LOC = os.path.dirname(os.path.abspath(__file__))
 
 
 @click.group()
@@ -16,7 +20,7 @@ def cli(ctx):
 @click.pass_context
 @config_required
 def config(ctx):
-    print(ctx.obj)
+    click.echo(ctx.obj)
 
 
 @cli.command(help='creates new project')
@@ -24,22 +28,19 @@ def config(ctx):
 def new(project_name):
     if not os.path.exists(project_name):
         base = os.path.join(os.getcwd(), project_name)
+        src_base = os.path.join(LOC, 'skeletons')
+
+        # Create directories
         os.makedirs(base)
         os.makedirs(os.path.join(base, TEMPLATE_DIR))
         os.makedirs(os.path.join(base, DATA_DIR))
         os.makedirs(os.path.join(base, BUILD_DIR))
 
-        conf = os.path.join(base, '.kiss.yml')
-        conf_str = ""
-        conf_str += "# Add templates to ignore key that you do not want rendered\n"
-        conf_str += "# ex.\n"
-        conf_str += "# ignore:\n"
-        conf_str += "#   - base.html\n"
-        with open(conf, 'a') as f:
-            f.write(conf_str)
-            os.utime(conf, None)
-
-        print(f'{project_name} created')
+        # Copy basic config file
+        conf_file = os.path.join(base, '.kiss.yml')
+        src_conf = os.path.join(src_base, '.kiss.yml')
+        shutil.copy(src_conf, conf_file)
+        click.echo(f'{project_name} created')
     else:
         click.echo('Project already exists')
 
@@ -52,11 +53,11 @@ def render(ctx):
     try:
         files = os.listdir(ctx.obj['TEMPLATE_DIR'])
     except FileNotFoundError:
-        print(f'{ctx.obj["TEMPLATE_DIR"]} does not exist')
+        click.echo(f'{ctx.obj["TEMPLATE_DIR"]} does not exist')
         exit(1)
 
     if not files:
-        print('No templates were found')
+        click.echo('No templates were found')
         exit(0)
 
     for f in files:
