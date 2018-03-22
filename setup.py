@@ -12,6 +12,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        kiss=kiss.commands:cli
+        kiss=kiss.cli:cli
     ''',
 )
