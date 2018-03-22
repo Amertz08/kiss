@@ -10,8 +10,15 @@ from config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
 def cli(ctx):
     # Set defaults
     ctx.obj = Config()
+
+
+@cli.command(help='Print config details')
+@click.pass_context
+def config(ctx):
     if not ctx.obj['CONFIG_FILE']:
-        print('.kiss.yml does not exist in project')
+        print('Missing .kiss.yml or not in project dir')
+        exit(0)
+    print(ctx.obj)
 
 
 @cli.command(help='creates new project')
@@ -31,7 +38,7 @@ def new(project_name):
 @click.pass_context
 def render(ctx):
     if not ctx.obj['CONFIG_FILE']:
-        print('Not in a project dir')
+        print('Missing .kiss.yml or not in project dir')
         exit(0)
     files = None
     try:
