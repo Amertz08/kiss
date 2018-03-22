@@ -1,0 +1,4 @@
+# Add templates to ignore key that you do not want rendered
+# ex.
+# ignore:
+#   - base.html
