@@ -31,7 +31,7 @@ def new(project_name):
 
         conf = os.path.join(base, '.kiss.yml')
         conf_str = ""
-        conf_str += "# Add files to ignore key that you do not want rendered\n"
+        conf_str += "# Add templates to ignore key that you do not want rendered\n"
         conf_str += "# ex.\n"
         conf_str += "# ignore:\n"
         conf_str += "#   - base.html\n"
