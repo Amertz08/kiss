@@ -2,8 +2,8 @@ import os
 import click
 import yaml
 
-from config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
-from decorators import config_required
+from .config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
+from .decorators import config_required
 
 
 @click.group()
