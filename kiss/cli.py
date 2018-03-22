@@ -3,21 +3,19 @@ import click
 import yaml
 
 from config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
+from decorators import config_required
 
 
 @click.group()
 @click.pass_context
 def cli(ctx):
-    # Set defaults
     ctx.obj = Config()
 
 
 @cli.command(help='Print config details')
 @click.pass_context
+@config_required
 def config(ctx):
-    if not ctx.obj['CONFIG_FILE']:
-        print('Missing .kiss.yml or not in project dir')
-        exit(0)
     print(ctx.obj)
 
 
@@ -36,10 +34,8 @@ def new(project_name):
 
 @cli.command(help='Renders project files')
 @click.pass_context
+@config_required
 def render(ctx):
-    if not ctx.obj['CONFIG_FILE']:
-        print('Missing .kiss.yml or not in project dir')
-        exit(0)
     files = None
     try:
         files = os.listdir(ctx.obj['TEMPLATE_DIR'])
