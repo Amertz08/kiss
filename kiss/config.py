@@ -6,6 +6,10 @@ import yaml
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+TEMPLATE_DIR = 'templates'
+BUILD_DIR = 'build'
+DATA_DIR = 'data'
+
 
 class Config(collections.MutableMapping):
 
@@ -13,9 +17,9 @@ class Config(collections.MutableMapping):
         self.store = {
             'IGNORE': [],
             'CONFIG_FILE': '',
-            'TEMPLATE_DIR': 'templates',
-            'BUILD_DIR': 'build',
-            'DATA_DIR': 'data',
+            'TEMPLATE_DIR': TEMPLATE_DIR,
+            'BUILD_DIR': BUILD_DIR,
+            'DATA_DIR': DATA_DIR,
             'PROJECT_DIR': os.getcwd(),
             'ENV': None
         }
@@ -30,12 +34,6 @@ class Config(collections.MutableMapping):
                     self.store['IGNORE'] = [data['ignore']]
                 else:
                     self.store['IGNORE'] = data['ignore']
-            if 'template_dir' in data:
-                self.store['TEMPLATE_DIR'] = data['template_dir']
-            if 'build_dir' in data:
-                self.store['BUILD_DIR'] = data['build_dir']
-            if 'data_dir' in data:
-                self.store['DATA_DIR'] = data['data_dir']
 
         self.store['ENV'] = Environment(
             loader=FileSystemLoader(self.store['TEMPLATE_DIR']),

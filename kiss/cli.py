@@ -2,7 +2,7 @@ import os
 import click
 import yaml
 
-from config import Config
+from config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
 
 
 @click.group()
@@ -18,10 +18,11 @@ def cli(ctx):
 @click.argument('project_name')
 def new(project_name):
     if not os.path.exists(project_name):
-        os.makedirs(project_name)
-        os.makedirs(project_name + '/templates')
-        os.makedirs(project_name + '/data')
-        os.makedirs(project_name + '/build')
+        base = os.path.join(os.getcwd(), project_name)
+        os.makedirs(base)
+        os.makedirs(os.path.join(base, TEMPLATE_DIR))
+        os.makedirs(os.path.join(base, DATA_DIR))
+        os.makedirs(os.path.join(base, BUILD_DIR))
     else:
         click.echo('Project already exists')
 
