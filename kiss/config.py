@@ -14,13 +14,14 @@ DATA_DIR = 'data'
 class Config(collections.MutableMapping):
 
     def __init__(self):
+        proj_dir = os.getcwd()
         self.store = {
             'IGNORE': [],
             'CONFIG_FILE': None,
-            'TEMPLATE_DIR': TEMPLATE_DIR,
-            'BUILD_DIR': BUILD_DIR,
-            'DATA_DIR': DATA_DIR,
-            'PROJECT_DIR': os.getcwd(),
+            'TEMPLATE_DIR': os.path.join(proj_dir, TEMPLATE_DIR),
+            'BUILD_DIR': os.path.join(proj_dir, BUILD_DIR),
+            'DATA_DIR': os.path.join(proj_dir, DATA_DIR),
+            'PROJECT_DIR': proj_dir,
             'ENV': None
         }
 
