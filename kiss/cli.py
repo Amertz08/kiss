@@ -40,6 +40,12 @@ def new(project_name):
         conf_file = os.path.join(base, '.kiss.yml')
         src_conf = os.path.join(src_base, '.kiss.yml')
         shutil.copy(src_conf, conf_file)
+
+        # Copy basic html file
+        html = os.path.join(base, TEMPLATE_DIR, 'base.html')
+        src_html = os.path.join(src_base, 'base.html')
+        shutil.copy(src_html, html)
+
         click.echo(f'{project_name} created')
     else:
         click.echo('Project already exists')
