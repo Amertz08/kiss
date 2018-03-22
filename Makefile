@@ -18,3 +18,9 @@ bashmount:
 	$(D) run -it --rm \
 	--mount src=$(shell pwd),target=/code,type=bind \
 	$(IMG) bash
+
+new:
+	python kiss/cli.py new example
+
+clean:
+	rm -rf example
