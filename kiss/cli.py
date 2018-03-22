@@ -28,6 +28,17 @@ def new(project_name):
         os.makedirs(os.path.join(base, TEMPLATE_DIR))
         os.makedirs(os.path.join(base, DATA_DIR))
         os.makedirs(os.path.join(base, BUILD_DIR))
+
+        conf = os.path.join(base, '.kiss.yml')
+        conf_str = ""
+        conf_str += "# Add files to ignore key that you do not want rendered\n"
+        conf_str += "# ex.\n"
+        conf_str += "# ignore:\n"
+        conf_str += "#   - base.html\n"
+        with open(conf, 'a') as f:
+            f.write(conf_str)
+            os.utime(conf, None)
+
         print(f'{project_name} created')
     else:
         click.echo('Project already exists')
