@@ -16,7 +16,7 @@ class Config(collections.MutableMapping):
     def __init__(self):
         self.store = {
             'IGNORE': [],
-            'CONFIG_FILE': '',
+            'CONFIG_FILE': None,
             'TEMPLATE_DIR': TEMPLATE_DIR,
             'BUILD_DIR': BUILD_DIR,
             'DATA_DIR': DATA_DIR,

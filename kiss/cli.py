@@ -30,6 +30,9 @@ def new(project_name):
 @cli.command(help='Renders project files')
 @click.pass_context
 def render(ctx):
+    if not ctx.obj['CONFIG_FILE']:
+        print('Not in a project dir')
+        exit(0)
     files = None
     try:
         files = os.listdir(ctx.obj['TEMPLATE_DIR'])
