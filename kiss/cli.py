@@ -28,6 +28,7 @@ def new(project_name):
         os.makedirs(os.path.join(base, TEMPLATE_DIR))
         os.makedirs(os.path.join(base, DATA_DIR))
         os.makedirs(os.path.join(base, BUILD_DIR))
+        print(f'{project_name} created')
     else:
         click.echo('Project already exists')
 
