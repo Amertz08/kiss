@@ -10,7 +10,9 @@ run:
 	$(IMG)
 
 bash:
-	$(D) run -it --rm $(IMG)
+	$(D) run -it --rm \
+	--mount src=$(shell pwd)/example,target=/example,type=bind \
+	$(IMG) bash
 
 bashmount:
 	$(D) run -it --rm \
