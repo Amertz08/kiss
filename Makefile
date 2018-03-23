@@ -11,7 +11,6 @@ run:
 
 bash:
 	$(D) run -it --rm \
-	--mount src=$(shell pwd)/example,target=/example,type=bind \
 	$(IMG) bash
 
 bashmount:
