@@ -42,6 +42,6 @@ Options:
 ```
 
 ## TODO
-- Handle static files
+- Handle "static" files
 - AWS deployment
 - Tests
