@@ -1,9 +1,9 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='kiss',
     version='0.1',
-    packages=find_packages(),
+    packages=['kiss'],
     include_package_data=True,
     install_requires=[
         'click==6.7',
