@@ -83,5 +83,6 @@ def render(ctx):
                 output.write(rendered_template)
 
 
+# TODO: this might be better elsewhere
 if __name__ == '__main__':
     cli()
