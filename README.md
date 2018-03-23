@@ -12,6 +12,7 @@ Reads `.kiss.yml` from project directory.
 
 ```yaml
 # Templates to ignore on render
+site_name: mysite
 ignore:
     - base.html
 ```
