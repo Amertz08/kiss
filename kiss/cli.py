@@ -4,8 +4,8 @@ import shutil
 import click
 import yaml
 
-from config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
-from decorators import config_required
+from .config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
+from .decorators import config_required
 
 LOC = os.path.dirname(os.path.abspath(__file__))
 
@@ -40,6 +40,11 @@ def new(project_name):
         conf_file = os.path.join(base, '.kiss.yml')
         src_conf = os.path.join(src_base, '.kiss.yml')
         shutil.copy(src_conf, conf_file)
+        data = {
+            'site_name': project_name
+        }
+        with open(conf_file, 'a') as f:
+            f.write(yaml.dump(data, default_flow_style=False))
 
         # Copy basic html file
         html = os.path.join(base, TEMPLATE_DIR, 'base.html')

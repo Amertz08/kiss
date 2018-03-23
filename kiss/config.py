@@ -16,6 +16,7 @@ class Config(collections.MutableMapping):
     def __init__(self):
         proj_dir = os.getcwd()
         self.store = {
+            'SITE_NAME': None,
             'IGNORE': [],
             'CONFIG_FILE': None,
             'TEMPLATE_DIR': os.path.join(proj_dir, TEMPLATE_DIR),
@@ -37,6 +38,8 @@ class Config(collections.MutableMapping):
                     self.store['IGNORE'] = [data['ignore']]
                 else:
                     self.store['IGNORE'] = data['ignore']
+            if 'site_name' in data:
+                self.store['SITE_NAME'] = data['site_name']
 
         self.store['ENV'] = Environment(
             loader=FileSystemLoader(self.store['TEMPLATE_DIR']),
