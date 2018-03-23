@@ -41,7 +41,8 @@ def new(project_name):
         src_conf = os.path.join(src_base, '.kiss.yml')
         shutil.copy(src_conf, conf_file)
         data = {
-            'site_name': project_name
+            'site_name': project_name,
+            'ignore': ['base.html']
         }
         with open(conf_file, 'a') as f:
             f.write(yaml.dump(data, default_flow_style=False))
@@ -80,6 +81,7 @@ def render(ctx):
                 with open(full_data, 'r') as dfile:
                     data = yaml.load(dfile)
             rendered_template = ctx.obj.render(f, **data)
+            click.echo(f'Rendering: {f}')
             with open(os.path.join(ctx.obj['BUILD_DIR'], f), 'w') as output:
                 output.write(rendered_template)
 
