@@ -39,6 +39,15 @@ Usage: kiss new [OPTIONS] PROJECT_NAME
 
 Options:
   --help  Show this message and exit.
+  
+$ kiss render --help
+Usage: kiss render [OPTIONS]
+
+  Renders project files
+
+Options:
+  -t, --template TEXT  Template(s) to render
+  --help               Show this message and exit.
 ```
 
 ## TODO
