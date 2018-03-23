@@ -40,12 +40,9 @@ def new(project_name):
         conf_file = os.path.join(base, '.kiss.yml')
         src_conf = os.path.join(src_base, '.kiss.yml')
         shutil.copy(src_conf, conf_file)
-        data = {
-            'site_name': project_name,
-            'ignore': ['base.html']
-        }
         with open(conf_file, 'a') as f:
-            f.write(yaml.dump(data, default_flow_style=False))
+            f.write(yaml.dump({'site_name': project_name}, default_flow_style=False))
+            f.write(yaml.dump({'ignore': ['base.html']}, default_flow_style=False))
 
         # Copy basic html file
         html = os.path.join(base, TEMPLATE_DIR, 'base.html')
