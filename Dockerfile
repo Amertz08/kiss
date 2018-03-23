@@ -8,6 +8,7 @@ RUN pip install \
 RUN mkdir /code
 WORKDIR /code
 ADD setup.py .
+ADD MANIFEST.in .
 ADD ./kiss kiss
 RUN pip install .
 
