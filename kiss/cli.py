@@ -22,7 +22,7 @@ def cli(ctx):
 @click.pass_context
 @config_required
 def config(ctx):
-    click.echo(ctx.obj)
+    print(ctx.obj)
 
 
 @cli.command(help='creates new project')
@@ -51,9 +51,9 @@ def new(project_name):
         src_html = os.path.join(src_base, 'base.html')
         shutil.copy(src_html, html)
 
-        click.echo(f'{project_name} created')
+        print(f'{project_name} created')
     else:
-        click.echo('Project already exists')
+        print('Project already exists')
 
 
 @cli.command(help='Renders project files')
@@ -68,11 +68,11 @@ def render(ctx, template):
         try:
             files = os.listdir(ctx.obj['TEMPLATE_DIR'])
         except FileNotFoundError:
-            click.echo(f'{ctx.obj["TEMPLATE_DIR"]} does not exist')
+            print(f'{ctx.obj["TEMPLATE_DIR"]} does not exist')
             exit(1)
 
         if not files:
-            click.echo('No templates were found')
+            print('No templates were found')
             exit(0)
 
     try:
