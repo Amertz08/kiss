@@ -49,8 +49,3 @@ Options:
   -t, --template TEXT  Template(s) to render
   --help               Show this message and exit.
 ```
-
-## TODO
-- Handle "static" files
-- AWS deployment
-- Tests
