@@ -68,5 +68,31 @@ class Config(collections.MutableMapping):
         return pprint.pformat(self.store, indent=4)
 
     def render(self, template_name, *args, **kwargs):
+        """
+        Render the given template
+        :param template_name: Template to render
+        :param args: args to pass to context
+        :param kwargs: kwargs to pass to context
+        :return: rendered template string
+        """
         template = self.store['ENV'].get_template(template_name)
         return template.render(*args, **kwargs)
+
+    def render_files(self, files):
+        """
+        Renders list of given templates
+        :param files: List of templates with abs path
+        :return:
+        """
+        for f in files:
+            if f not in self['IGNORE']:
+                data_file_name = f.replace('.html', '.yml')
+                full_data = os.path.join(self['DATA_DIR'], data_file_name)
+                data = {}
+                if os.path.exists(full_data):
+                    with open(full_data, 'r') as dfile:
+                        data = yaml.load(dfile)
+                rendered_template = self.render(f, **data)
+                print(f'Rendering: {f}')
+                with open(os.path.join(self['BUILD_DIR'], f), 'w') as output:
+                    output.write(rendered_template)
