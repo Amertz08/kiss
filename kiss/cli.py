@@ -4,6 +4,8 @@ import shutil
 import click
 import yaml
 
+from jinja2.exceptions import TemplateNotFound
+
 from .config import Config, TEMPLATE_DIR, BUILD_DIR, DATA_DIR
 from .decorators import config_required
 
@@ -55,29 +57,26 @@ def new(project_name):
 
 
 @cli.command(help='Renders project files')
+@click.option('-t', '--template', multiple=True, help='Template(s) to render')
 @click.pass_context
 @config_required
-def render(ctx):
+def render(ctx, template):
     files = None
+    if template:
+        files = [f'{t}.html' for t in template]
+    else:
+        try:
+            files = os.listdir(ctx.obj['TEMPLATE_DIR'])
+        except FileNotFoundError:
+            click.echo(f'{ctx.obj["TEMPLATE_DIR"]} does not exist')
+            exit(1)
+
+        if not files:
+            click.echo('No templates were found')
+            exit(0)
+
     try:
-        files = os.listdir(ctx.obj['TEMPLATE_DIR'])
-    except FileNotFoundError:
-        click.echo(f'{ctx.obj["TEMPLATE_DIR"]} does not exist')
+        ctx.obj.render_files(files)
+    except TemplateNotFound as e:
+        print(f'Template not found: {e.message}')
         exit(1)
-
-    if not files:
-        click.echo('No templates were found')
-        exit(0)
-
-    for f in files:
-        if f not in ctx.obj['IGNORE']:
-            data_file_name = f.replace('.html', '.yml')
-            full_data = os.path.join('data', data_file_name)
-            data = {}
-            if os.path.exists(full_data):
-                with open(full_data, 'r') as dfile:
-                    data = yaml.load(dfile)
-            rendered_template = ctx.obj.render(f, **data)
-            click.echo(f'Rendering: {f}')
-            with open(os.path.join(ctx.obj['BUILD_DIR'], f), 'w') as output:
-                output.write(rendered_template)
