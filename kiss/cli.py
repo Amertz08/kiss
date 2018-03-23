@@ -81,8 +81,3 @@ def render(ctx):
             click.echo(f'Rendering: {f}')
             with open(os.path.join(ctx.obj['BUILD_DIR'], f), 'w') as output:
                 output.write(rendered_template)
-
-
-# TODO: this might be better elsewhere
-if __name__ == '__main__':
-    cli()
