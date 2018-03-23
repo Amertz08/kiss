@@ -12,4 +12,4 @@ def runner():
 def test_config_print_no_file(runner):
     result = runner.invoke(cli, ['config'])
     assert result.exit_code == 0, f'Invalid exit code: {result.exit_code}'
-    assert result.output == 'Missing .kiss.yml or not in a project directory'
+    assert result.output == 'Missing .kiss.yml or not in a project directory\n'
