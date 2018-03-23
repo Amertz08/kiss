@@ -11,6 +11,7 @@ run:
 
 bash:
 	$(D) run -it --rm \
+	--mount src=$(shell pwd)/example,target=/example,type=bind \
 	$(IMG) bash
 
 test:
@@ -28,3 +29,4 @@ new:
 
 clean:
 	rm -rf example
+	mkdir -p example
