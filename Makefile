@@ -13,6 +13,11 @@ bash:
 	$(D) run -it --rm \
 	$(IMG) bash
 
+test:
+	$(D) run -it --rm \
+	--mount src=$(shell pwd)/tests,target=/code/tests,type=bind \
+	$(IMG) bash
+
 bashmount:
 	$(D) run -it --rm \
 	--mount src=$(shell pwd),target=/code,type=bind \
