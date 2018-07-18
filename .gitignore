@@ -2,3 +2,6 @@ venv
 .idea
 *.pyc
 example
+.pytest_cache/
+.tox/
+*.egg-info
