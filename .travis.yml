@@ -1,0 +1,10 @@
+language: python
+python:
+  - 3.6
+
+install:
+  - pip install flake8
+before_script:
+  - flake8 kiss
+script:
+  - echo "hello"
