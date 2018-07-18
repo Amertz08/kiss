@@ -1,5 +1,7 @@
 # K.I.S.S. (keep it simple static)
 
+[![Build Status](https://travis-ci.org/Amertz08/kiss.svg?branch=master)](https://travis-ci.org/Amertz08/kiss)
+
 This is a simply static site tool build on Jinja2.
 
 - `project/templates` - Add templates to ignore to `.kiss.yml` file
